@@ -136,7 +136,7 @@ contract("SimpleBank", function (accounts) {
     assert.equal(
       expectedEventResult.newBalance,
       newBalance,
-      "LogWithdrawal event newBalance property not emitted, check deposit method",
+      "LogWithdrawal event newBalance prop≈erty not emitted, check deposit method",
     );
     assert.equal(
       expectedEventResult.withdrawAmount,

@@ -76,22 +76,22 @@ contract SimpleBank {
       // 1. Add the appropriate keyword so that this function can receive ether
     
       // 2. Users should be enrolled before they can make deposits
-        enrolled[msg.sender] = true;
+        require(enrolled[msg.sender] == true, "Please enroll first"); 
       // 3. Add the amount to the user's balance. Hint: the amount can be
       //    accessed from of the global variable `msg`
-      balances[msg.sender] += msg.value;
+      balances[msg.sender] += msg.value; // ok 
 
       // 4. Emit the appropriate event associated with this function
-       emit LogDepositMade(msg.sender, msg.value);
+      emit LogDepositMade(msg.sender, msg.value); // ok
       // 5. return the balance of sndr of this transaction
-      return balances[msg.sender];
+      return balances[msg.sender]; // ok 
     }
 
     /// @notice Withdraw ether from bank
     /// @dev This does not return any excess ether sent to it
     /// @param withdrawAmount amount you want to withdraw
     /// @return The balance remaining for the user
-    function withdraw(uint withdrawAmount) public payable returns (uint) {
+    function withdraw(uint withdrawAmount) public payable returns (uint) { // ok
       // If the sender's balance is at least the amount they want to withdraw,
       // Subtract the amount from the sender's balance, and try to send that amount of ether
       // to the user attempting to withdraw. 
@@ -99,17 +99,17 @@ contract SimpleBank {
 
       // 1. Use a require expression to guard/ensure sender has enough funds
 
-      require(balances[msg.sender] >= withdrawAmount);
+      require(balances[msg.sender] >= withdrawAmount, " you don't have enough funds"); // ok
 
       // 2. Transfer Eth to the sender and decrement the withdrawal amount from
       //    sender's balances
-
-      balances[msg.sender] -= withdrawAmount;
+      balances[msg.sender] -= withdrawAmount; // ok 
+      msg.sender.transfer(withdrawAmount); // ok 
 
       // 3. Emit the appropriate event for this message
 
-      emit LogWithdrawal(msg.sender, msg.value, balances[msg.sender]);
+      emit LogWithdrawal(msg.sender, withdrawAmount, balances[msg.sender]); // ok 
 
-      return balances[msg.sender];
+      return balances[msg.sender]; // ok 
     }
 }
